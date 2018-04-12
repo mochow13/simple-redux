@@ -14,11 +14,14 @@ import {selectBook} from '../actions/index';
 
 class BookList extends Component {
     renderList() {
+        console.log("in renderList()");
         // The props here receive the list of books from Redux
         return this.props.books.map((book)=>{
+            console.log("in this.props.books.map");
             return (
                 <li
                     key={book.title}
+                    // Calling an action on click
                     onClick={()=>this.props.selectBook(book)}
                     className="list-group-item">
                     {book.title}
@@ -28,6 +31,7 @@ class BookList extends Component {
     }
 
     render() {
+        console.log("rendering book list");
         return (
             <ul className="list-group col-sm-4">
                 {this.renderList()}
@@ -38,6 +42,7 @@ class BookList extends Component {
 
 // The returned value of this functions will be available to the props of BookList
 function mapDispatchToProps(dispatch) {
+    console.log("in mapDispatchToProps() for book_list");
     // This is essentially 'dispatching' the action selectBook to all of our reducers
     // Remember, all of our actions have to flow through all of our reducers
     return bindActionCreators({selectBook: selectBook}, dispatch);
@@ -45,9 +50,12 @@ function mapDispatchToProps(dispatch) {
 
 // This function is basically like the glue between React and Redux
 function mapStateToProps(state) {
+    console.log("in mapStateToProps() for book_list");
     // Returns the book list
     // Whatever is returned from here, will be received by the props of BookList
     // How? This is a thing Redux is taking care of
+    // The state is coming from the reducers who are returning any change in the states they
+    // are responsible
     return {
         books: state.books
     };
